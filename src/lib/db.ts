@@ -172,7 +172,7 @@ const INITIAL_BOOKS = [
     category_id: 'c3',
     category_name: 'Law & Jurisprudence',
     availability: true,
-    cover_image: 'https://images.unsplash.com/photo-1505664194779-8bebcb3fdd02?auto=format&fit=crop&q=80&w=600',
+    cover_image: 'https://images.unsplash.com/photo-1589391886645-1514df239327?auto=format&fit=crop&q=80&w=600',
     description: 'A masterpiece study on the constitutional structure, human rights provisions, separation of powers, and regulatory frameworks governing federalism in the Federal Republic of Nigeria.'
   },
 
