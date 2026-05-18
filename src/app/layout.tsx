@@ -49,9 +49,6 @@ export default function RootLayout({
             <nav className="flex items-center gap-6 font-semibold text-sm tracking-wide text-slate-600">
               <Link href="/" className="hover:text-pink-600 transition duration-200">Home</Link>
               <Link href="/#catalogue" className="hover:text-pink-600 transition duration-200">Catalog</Link>
-              <Link href="/admin" className="px-5 py-2.5 bg-blue-950 text-pink-100 rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-pink-600 hover:text-white transition duration-300 border border-pink-500/20 shadow-sm">
-                Registry Portal
-              </Link>
             </nav>
           </div>
         </header>
@@ -79,7 +76,13 @@ export default function RootLayout({
               </p>
             </div>
             
-            <p className="text-slate-600 text-xs mt-10 tracking-widest uppercase">&copy; {new Date().getFullYear()} Lead City University. All academic rights reserved.</p>
+            {/* Elegant and subtle Admin Gate link in footer */}
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-between border-t border-slate-900 pt-8 text-slate-500 text-xs gap-4">
+              <p className="tracking-widest uppercase">&copy; {new Date().getFullYear()} Lead City University. All academic rights reserved.</p>
+              <Link href="/admin" className="hover:text-pink-500 transition duration-200 uppercase tracking-widest text-[9px] font-bold border border-slate-800 hover:border-pink-500/20 px-3 py-1.5 rounded bg-slate-900/40">
+                Registry Administration Gate
+              </Link>
+            </div>
           </div>
         </footer>
       </body>
