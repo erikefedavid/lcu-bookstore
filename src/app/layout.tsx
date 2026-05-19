@@ -1,31 +1,52 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Link from 'next/link';
 import HeaderLogo from '@/components/HeaderLogo';
 
-const inter = Inter({
-  variable: "--font-sans",
-  subsets: ["latin"],
-});
+const inter = { variable: "font-sans" };
+const playfair = { variable: "font-serif" };
 
-const playfair = Playfair_Display({
-  variable: "--font-serif",
-  subsets: ["latin"],
-});
+import { cookies } from 'next/headers';
+import jwt from 'jsonwebtoken';
+import { connectDB } from '@/lib/db';
+import User from '@/models/User';
+import LogoutButton from '@/components/LogoutButton';
+
+const JWT_SECRET = process.env.JWT_SECRET || 'lcu-super-secret-jwt-key-2026';
 
 export const metadata: Metadata = {
   title: "LCU Online Bookstore | Lead City University Ibadan",
   description: "Sophisticated digital repository for textbooks and scholarly resources at Lead City University.",
 };
 
-export default function RootLayout({
+async function getAuthenticatedUser() {
+  try {
+    const cookieStore = await cookies();
+    const token = cookieStore.get('lcu_token')?.value;
+    if (!token) return null;
+
+    const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
+    await connectDB();
+    const user = await User.findById(decoded.id).select('name role');
+    return user;
+  } catch (error) {
+    return null;
+  }
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = await getAuthenticatedUser();
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable} h-full antialiased`}>
+    <html lang="en" className="h-full antialiased">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
+      </head>
       <body className="min-h-full flex flex-col bg-slate-50 text-slate-800 font-sans selection:bg-pink-100 selection:text-blue-900">
         
         {/* LCU Top Accent Ribbon (Blue, Pink, White) */}
@@ -49,6 +70,24 @@ export default function RootLayout({
             <nav className="flex items-center gap-6 font-semibold text-sm tracking-wide text-slate-600">
               <Link href="/" className="hover:text-pink-600 transition duration-200">Home</Link>
               <Link href="/#catalogue" className="hover:text-pink-600 transition duration-200">Catalog</Link>
+              
+              {user ? (
+                <div className="flex items-center gap-4 border-l border-slate-200 pl-4">
+                  <span className="text-xs text-blue-950 font-serif italic font-bold">
+                    Hi, {user.name.split(' ')[0]} ({user.role})
+                  </span>
+                  <LogoutButton />
+                </div>
+              ) : (
+                <div className="flex items-center gap-4 border-l border-slate-200 pl-4">
+                  <Link href="/login" className="hover:text-pink-600 transition duration-200 text-xs uppercase tracking-wider font-bold">
+                    Log In
+                  </Link>
+                  <Link href="/register" className="bg-blue-950 text-pink-100 border border-pink-500/20 px-4 py-1.5 rounded-lg hover:bg-pink-600 hover:text-white transition duration-200 text-xs uppercase tracking-wider font-bold">
+                    Register
+                  </Link>
+                </div>
+              )}
             </nav>
           </div>
         </header>

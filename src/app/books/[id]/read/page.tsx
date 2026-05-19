@@ -22,6 +22,18 @@ export default function BookReader() {
       if (!params.id) return;
       try {
         setLoading(true);
+        
+        // 1. First, check if the student is authenticated
+        const authRes = await fetch('/api/auth/me');
+        const authData = await authRes.json();
+        
+        if (!authData.success) {
+          // If not logged in, redirect to login page
+          window.location.href = `/login?redirect=/books/${params.id}/read`;
+          return;
+        }
+
+        // 2. Load the book details and content
         const res = await fetch(`/api/books/${params.id}`);
         const data = await res.json();
         if (data.success) {

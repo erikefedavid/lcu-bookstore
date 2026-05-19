@@ -3,6 +3,8 @@
 :root {
   --background: #f8fafc; /* Beautiful soft scholarly light slate */
   --foreground: #0c1428; /* Deep LCU Navy Blue */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
 }
 
 body {

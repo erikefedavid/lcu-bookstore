@@ -57,6 +57,7 @@ export async function connectDB() {
                   category_id: matchedCat._id,
                   category_name: matchedCat.name,
                   description: book.description,
+                  content: book.content,
                   cover_image: book.cover_image,
                   availability: book.availability
                 });
