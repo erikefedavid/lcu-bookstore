@@ -12,6 +12,7 @@ interface Book {
   cover_image?: string;
   availability: boolean;
   description?: string;
+  content?: string;
 }
 
 interface Category {
@@ -38,6 +39,7 @@ export default function AdminDashboard() {
   const [coverImage, setCoverImage] = useState('');
   const [availability, setAvailability] = useState(true);
   const [description, setDescription] = useState('');
+  const [content, setContent] = useState('');
   const [formOpen, setFormOpen] = useState(false);
 
   const [newCatName, setNewCatName] = useState('');
@@ -101,6 +103,7 @@ export default function AdminDashboard() {
     setCoverImage('');
     setAvailability(true);
     setDescription('');
+    setContent('');
     setFormOpen(true);
   }
 
@@ -113,6 +116,7 @@ export default function AdminDashboard() {
     setCoverImage(book.cover_image || '');
     setAvailability(book.availability);
     setDescription(book.description || '');
+    setContent(book.content || '');
     setFormOpen(true);
   }
 
@@ -128,7 +132,8 @@ export default function AdminDashboard() {
       category_name: cat.name,
       cover_image: coverImage || 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=400',
       availability,
-      description
+      description,
+      content
     };
 
     try {
@@ -593,6 +598,17 @@ export default function AdminDashboard() {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Provide an overview of the volume..."
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 text-slate-950 text-sm font-semibold"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Full Book Content (Online Reading Text)</label>
+                <textarea
+                  rows={8}
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  placeholder="Paste the full book content here..."
                   className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 text-slate-950 text-sm font-semibold"
                 />
               </div>

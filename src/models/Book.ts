@@ -7,6 +7,7 @@ export interface IBook extends Document {
   category_name: string;
   description?: string;
   cover_image?: string;
+  content?: string;
   availability: boolean;
   created_at?: Date;
   updated_at?: Date;
@@ -19,6 +20,7 @@ const BookSchema: Schema = new Schema({
   category_name: { type: String, required: true },
   description: { type: String },
   cover_image: { type: String },
+  content: { type: String },
   availability: { type: Boolean, default: true, required: true },
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now }
