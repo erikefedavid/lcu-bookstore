@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Link from 'next/link';
-import HeaderLogo from '@/components/HeaderLogo';
+import Header from '@/components/Header';
 
 const inter = { variable: "font-sans" };
 const playfair = { variable: "font-serif" };
@@ -10,7 +10,7 @@ import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 import { connectDB } from '@/lib/db';
 import User from '@/models/User';
-import LogoutButton from '@/components/LogoutButton';
+
 
 const JWT_SECRET = process.env.JWT_SECRET || 'lcu-super-secret-jwt-key-2026';
 
@@ -52,45 +52,8 @@ export default async function RootLayout({
         {/* LCU Top Accent Ribbon (Blue, Pink, White) */}
         <div className="h-1.5 w-full bg-gradient-to-r from-blue-800 via-pink-500 to-blue-950"></div>
 
-        {/* Sophisticated Header */}
-        <header className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm backdrop-blur-md bg-white/95">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-3 group">
-              {/* Client-safe Dynamic Logo Resolver */}
-              <HeaderLogo />
-              <div className="flex flex-col">
-                <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-blue-950 group-hover:text-pink-600 transition duration-300">
-                  LEAD CITY UNIVERSITY
-                </span>
-                <span className="text-[9px] font-bold text-pink-600 uppercase tracking-widest -mt-1 pl-0.5">
-                  • Library & Bookstore Archives •
-                </span>
-              </div>
-            </Link>
-            <nav className="flex items-center gap-6 font-semibold text-sm tracking-wide text-slate-600">
-              <Link href="/" className="hover:text-pink-600 transition duration-200">Home</Link>
-              <Link href="/#catalogue" className="hover:text-pink-600 transition duration-200">Catalog</Link>
-              
-              {user ? (
-                <div className="flex items-center gap-4 border-l border-slate-200 pl-4">
-                  <span className="text-xs text-blue-950 font-serif italic font-bold">
-                    Hi, {user.name.split(' ')[0]} ({user.role})
-                  </span>
-                  <LogoutButton />
-                </div>
-              ) : (
-                <div className="flex items-center gap-4 border-l border-slate-200 pl-4">
-                  <Link href="/login" className="hover:text-pink-600 transition duration-200 text-xs uppercase tracking-wider font-bold">
-                    Log In
-                  </Link>
-                  <Link href="/register" className="bg-blue-950 text-pink-100 border border-pink-500/20 px-4 py-1.5 rounded-lg hover:bg-pink-600 hover:text-white transition duration-200 text-xs uppercase tracking-wider font-bold">
-                    Register
-                  </Link>
-                </div>
-              )}
-            </nav>
-          </div>
-        </header>
+        {/* Sophisticated Responsive Header */}
+        <Header user={user ? { name: user.name, role: user.role } : null} />
 
         {/* Dynamic scholar content */}
         <main className="flex-grow">{children}</main>
