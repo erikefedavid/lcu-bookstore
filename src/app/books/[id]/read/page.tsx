@@ -37,7 +37,11 @@ export default function BookReader() {
         const res = await fetch(`/api/books/${params.id}`);
         const data = await res.json();
         if (data.success) {
-          setBook(data.document);
+          if (!data.document.availability) {
+            setError('This volume is currently not available for reading.');
+          } else {
+            setBook(data.document);
+          }
         } else {
           setError(data.error || 'Book not found');
         }
