@@ -205,8 +205,9 @@ export default function Home() {
                   {/* Premium book cover container */}
                   <Link href={`/books/${book._id}`} className="relative h-80 overflow-hidden bg-slate-100 block border-b border-slate-100">
                     <img
-                      src={book.cover_image}
+                      src={book.cover_image || 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=400'}
                       alt={book.title}
+                      onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=400'; }}
                       className="w-full h-full object-cover group-hover:scale-[1.03] transition-all duration-700"
                     />
                     
@@ -217,7 +218,7 @@ export default function Home() {
                           ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
                           : 'bg-rose-50 text-rose-800 border-rose-200'
                       }`}>
-                        {book.availability ? '● In Stock' : '○ Loaned Out'}
+                        {book.availability ? '● Available' : '○ Not Available'}
                       </span>
                     </div>
                   </Link>

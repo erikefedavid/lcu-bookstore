@@ -105,8 +105,9 @@ export default function BookDetails() {
           className="md:col-span-5 rounded-xl overflow-hidden shadow-lg border border-slate-250 p-2 bg-slate-50 max-h-[520px] flex items-center justify-center"
         >
           <img
-            src={book.cover_image}
+            src={book.cover_image || 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=400'}
             alt={book.title}
+            onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=400'; }}
             className="w-full h-full object-cover rounded-lg border border-slate-100"
           />
         </motion.div>
@@ -128,7 +129,7 @@ export default function BookDetails() {
                 ? 'bg-emerald-50 text-emerald-800 border-emerald-200 shadow-sm'
                 : 'bg-rose-50 text-rose-800 border-rose-200 shadow-sm'
             }`}>
-              {book.availability ? '● Active Stack Shelf' : '○ Borrowed / Out of Stock'}
+              {book.availability ? '● Available' : '○ Not Available'}
             </span>
           </div>
 

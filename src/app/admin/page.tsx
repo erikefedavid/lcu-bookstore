@@ -372,8 +372,9 @@ export default function AdminDashboard() {
                       <tr key={book._id} className="hover:bg-slate-50/40 transition">
                         <td className="py-4 px-6">
                           <img
-                            src={book.cover_image}
+                            src={book.cover_image || 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=400'}
                             alt={book.title}
+                            onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=400'; }}
                             className="w-12 h-16 object-cover rounded border border-slate-200 shadow-sm"
                           />
                         </td>
@@ -390,7 +391,7 @@ export default function AdminDashboard() {
                               ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
                               : 'bg-rose-50 text-rose-800 border-rose-200'
                           }`}>
-                            {book.availability ? 'In Stock' : 'Loaned'}
+                            {book.availability ? 'Available' : 'Not Available'}
                           </span>
                         </td>
                         <td className="py-4 px-6 text-right space-x-2">
@@ -577,7 +578,7 @@ export default function AdminDashboard() {
                       onChange={() => setAvailability(true)}
                       className="accent-blue-950"
                     />
-                    Shelved In Stock
+                    Available
                   </label>
                   <label className="flex items-center gap-2 cursor-pointer font-bold text-xs uppercase text-slate-650 tracking-wider">
                     <input
@@ -586,7 +587,7 @@ export default function AdminDashboard() {
                       onChange={() => setAvailability(false)}
                       className="accent-blue-950"
                     />
-                    Loaned / Out of Stock
+                    Not Available
                   </label>
                 </div>
               </div>
